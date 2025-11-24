@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Takoyaki Kroya — Nikmatnya Cemilan Laut</title>
+  <meta name="description" content="Takoyaki Kroya - Takoyaki gurita & berbagai varian. Kwetiau basah juga tersedia. Warna brand: merah & kuning." />
+
+  <style>
+    :root{
+      --red: #d9302f;
+      --yellow: #ffca28;
+      --white: #ffffff;
+      --dark: #222222;
+      --muted: #f6f6f6;
+      --card-radius: 12px;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--dark);background:linear-gradient(180deg,var(--muted),#fff);line-height:1.5}
+    a{color:inherit;text-decoration:none}
+    header{
+      background:linear-gradient(90deg,var(--red),#c52b2b 50%, var(--yellow) 50%, #ffbb00);
+      color:var(--white);
+      position:sticky;top:0;z-index:60;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .nav{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;
+    }
+    /* Logo */
+    .logo{
+      width:56px;height:56px;background:var(--white);border-radius:10px;display:flex;align-items:center;justify-content:center;padding:6px;
+    }
+    nav ul{list-style:none;margin:0;padding:0;display:flex;gap:12px;align-items:center}
+    nav a{padding:8px 12px;border-radius:8px;font-weight:600;color:rgba(255,255,255,0.95)}
+    nav a:hover{background:rgba(255,255,255,0.12)}
+    .cta{background:var(--yellow);color:var(--dark);padding:8px 12px;border-radius:8px;font-weight:700}
+    main{padding:40px 0}
+
+    /* Hero / Banner */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.85));
+      border-radius:16px;
+      display:flex;gap:24px;align-items:center;padding:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.06);
+    }
+    .hero-left{flex:1}
+    .hero-right{width:360px;display:flex;justify-content:center;align-items:center}
+    .hero h1{margin:0;font-size:28px;color:var(--red)}
+    .hero p{margin:8px 0 16px;color:#333}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}
+    .badge{background:var(--yellow);padding:6px 10px;border-radius:999px;font-weight:700;color:var(--dark)}
+
+    /* Product grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+    .card{background:var(--white);border-radius:var(--card-radius);overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.06);display:flex;flex-direction:column}
+    .card img{width:100%;height:150px;object-fit:cover;display:block}
+    .card-body{padding:12px;flex:1;display:flex;flex-direction:column;gap:8px}
+    .price{font-weight:800;color:var(--red);font-size:18px}
+    .specs{font-size:13px;color:#555}
+    .btn-row{display:flex;gap:8px;margin-top:auto}
+    .btn{border:0;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:700}
+    .btn-buy{background:var(--red);color:var(--white)}
+    .btn-details{background:#f3f3f3;color:var(--dark)}
+
+    /* Featured */
+    .featured{border:3px solid rgba(217,48,47,0.12);padding:12px;border-radius:12px;display:flex;gap:12px;align-items:center}
+    .featured img{width:120px;height:90px;object-fit:cover;border-radius:10px}
+
+    /* About / Contact */
+    .card-plain{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.04)}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media (max-width:780px){.two-col{grid-template-columns:1fr}.hero{flex-direction:column}.hero-right{width:100%}}
+
+    footer{padding:18px 0;text-align:center;color:#666;font-size:14px;margin-top:36px}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
+    .modal{background:#fff;padding:18px;border-radius:12px;max-width:520px;width:96%;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+    .modal h3{margin-top:0}
+    .form-row{display:flex;gap:8px;margin-top:8px}
+    .form-row input,.form-row select,textarea{flex:1;padding:10px;border-radius:8px;border:1px solid #e6e6e6}
+    .close{background:#eee;border-radius:8px;padding:8px 10px;border:0;cursor:pointer}
+
+    /* small helpers */
+    .muted{color:#666;font-size:14px}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.04);font-weight:700}
+    .logo-text{font-size:14px}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <!-- simple SVG logo -->
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="12" fill="#fff"/>
+            <g transform="translate(6,6)">
+              <circle cx="18" cy="18" r="14" fill="#d9302f"/>
+              <path d="M12 18c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-2.7-6-6z" fill="#ffca28"/>
+              <text x="6" y="34" font-size="6" font-weight="700" fill="#fff">TK</text>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">Takoyaki Kroya</div>
+          <div style="font-size:12px;opacity:0.9">Cemilan laut, nikmat, nagih</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#produk">Produk</a></li>
+          <li><a href="#tentang">Tentang Kami</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+          <li><a class="cta" href="#produk">Pesan Sekarang</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <!-- HERO / BANNER -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <h1 id="hero-title">Takoyaki Kroya — Nikmatnya cemilan laut, satu gigitan nagih!</h1>
+        <p>Takoyaki Kroya menyajikan takoyaki gurita asli sebagai produk unggulan, serta varian sosis, crabstick, keju, dan bakso. Juga tersedia menu kwetiau basah untuk yang ingin kenyang.</p>
+        <div class="badges">
+          <span class="badge">Produk Unggulan: Takoyaki Gurita</span>
+          <span class="pill">Dibuka sejak 8 Nov 2023</span>
+          <span class="badge" style="background:rgba(255,255,255,0.12);color:#fff">Siap Antar</span>
+        </div>
+
+        <div style="margin-top:18px">
+          <a class="btn btn-buy" href="#produk" role="button">Lihat Produk</a>
+          <button class="btn btn-details" onclick="scrollToSection('kontak')">Hubungi Kami</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Hero image of takoyaki (placeholder unsplash) -->
+        <img src="png/tokoyaki gurita.jpeg"
+             alt="Takoyaki Gurita - Takoyaki Kroya"
+             style="width:320px;height:220px;object-fit:cover;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.18)">
+      </div>
+    </section>
+
+    <!-- Visi Misi -->
+    <section style="margin-top:20px" class="card-plain" aria-labelledby="visi">
+      <h2 id="visi">Visi, Misi, dan Nilai</h2>
+      <div class="two-col" style="margin-top:12px">
+        <div>
+          <h3>Visi</h3>
+          <p>Menyebarkan cita rasa takoyaki khas Kroya ke seluruh penjuru kota — menjadi cemilan favorit keluarga Indonesia.</p>
+          <h3>Misi</h3>
+          <ul>
+            <li>Menyajikan takoyaki berkualitas dengan bahan segar dan resep konsisten.</li>
+            <li>Mengutamakan kebersihan, pelayanan ramah, dan harga terjangkau.</li>
+            <li>Mengembangkan varian rasa yang inovatif namun tetap autentik.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nilai Perusahaan</h3>
+          <ul>
+            <li>Kejujuran bahan & proses</li>
+            <li>Kualitas konsisten</li>
+            <li>Kerja sama tim & layanan pelanggan</li>
+          </ul>
+          <div style="margin-top:8px" class="muted">Produk unggulan kami: <strong>Takoyaki Gurita</strong> — gurita pilihan, tekstur lembut, kelapa pedas opsional.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Produk -->
+    <section id="produk" style="margin-top:28px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2>Produk Kami</h2>
+        <div class="muted">Pilih varian, cek spesifikasi & klik <strong>Beli</strong></div>
+      </div>
+
+      <!-- featured -->
+      <div style="margin-top:12px" class="featured" aria-labelledby="featured-title">
+        <img src="https://images.unsplash.com/photo-1621750165486-1cb7e5a6f3ad?q=80&w=900&auto=format&fit=crop&ixlib=rb-4.0.3&s=5f0b6d6a2a2a3a8b7f0bc8f6f9e4e3b2" alt="Takoyaki Gurita">
+        <div>
+          <h3 id="featured-title">Takoyaki Gurita — Produk Unggulan</h3>
+          <p class="muted">Gurita asli segar, adonan empuk, saus special Kroya, taburan nori & katsuobushi. Paling laris di menu kami.</p>
+          <div style="margin-top:8px">
+            <span class="price">Rp 15.000 / porsi</span>
+            <button class="btn btn-buy" style="margin-left:12px" onclick="openOrderModal('Takoyaki Gurita', 28000)">Beli Sekarang</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:18px" aria-live="polite">
+        <!-- Product: Gurita -->
+        <article class="card" role="article" aria-labelledby="p-gurita">
+          <img src="png/WhatsApp Image 2025-11-23 at 19.42.19.jpeg" alt="Takoyaki Gurita">
+          <div class="card-body">
+            <h4 id="p-gurita">Takoyaki Gurita (Unggulan)</h4>
+            <div class="specs">Isi: potongan gurita, saus khas, mayones, nori, katsuobushi</div>
+            <div class="price">Rp 15.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Takoyaki Gurita', 28000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Berat 200g, Porsi 6 bola. Cocok untuk cemilan.')">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Sosis -->
+        <article class="card">
+          <img src="png/tokoyaki sosis.jpeg" alt="Takoyaki Sosis">
+          <div class="card-body">
+            <h4>Takoyaki Sosis</h4>
+            <div class="specs">Isi: sosis sapi/ayam pilihan, saus, keju opsional</div>
+            <div class="price">Rp 10.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Takoyaki Sosis', 22000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Porsi 6 bola. Cocok untuk anak-anak dan keluarga.')">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Crabstick -->
+        <article class="card">
+          <img src="png/takoyaki crabsik.jpeg" alt="Takoyaki Crabstick">
+          <div class="card-body">
+            <h4>Takoyaki Crabstick</h4>
+            <div class="specs">Isi: crabstick premium, saus kroya, taburan</div>
+            <div class="price">Rp 15.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Takoyaki Crabstick', 24000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Porsi 6 bola. Tekstur gurih dari crabstick.')">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Keju -->
+        <article class="card">
+          <img src="png/takoyaki keju.jpeg" alt="Takoyaki Keju">
+          <div class="card-body">
+            <h4>Takoyaki Keju</h4>
+            <div class="specs">Isi: kejunya melted, saus manis & gurih</div>
+            <div class="price">Rp 10.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Takoyaki Keju', 25000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Porsi 6 bola. Lebih creamy & disukai anak-anak.')">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Bakso -->
+        <article class="card">
+          <img src="png/takoyaki bakso.jpeg" alt="Takoyaki Bakso">
+          <div class="card-body">
+            <h4>Takoyaki Bakso</h4>
+            <div class="specs">Isi: potongan bakso, tekstur kenyal</div>
+            <div class="price">Rp 10.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Takoyaki Bakso', 23000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Porsi 6 bola. Rasa pedas opsional.')">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product: Kwetiau Basah -->
+        <article class="card">
+          <img src="png/kwetiaw.jpeg" alt="Kwetiau Basah">
+          <div class="card-body">
+            <h4>Kwetiau Basah</h4>
+            <div class="specs">Menu: kwetiau basah dengan pilihan ayam/sapi/seafood</div>
+            <div class="price">Rp 10.000</div>
+            <div class="btn-row">
+              <button class="btn btn-buy" onclick="openOrderModal('Kwetiau Basah', 32000)">Beli</button>
+              <button class="btn btn-details" onclick="alert('Spesifikasi: Porsi besar, cocok untuk makan siang atau malam.')">Detail</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tentang Kami -->
+    <section id="tentang" style="margin-top:28px">
+      <h2>Tentang Kami</h2>
+      <div class="two-col" style="margin-top:12px">
+        <div class="card-plain">
+          <h3>Sejarah Perusahaan</h3>
+          <p>Takoyaki Kroya berdiri pada <strong>8 November 2023</strong>, berdiri dari kecintaan terhadap cemilan khas Jepang yang diadaptasi dengan selera lokal. Berawal dari usaha kaki lima, berkembang menjadi tempat makan kecil dan kini menerima pesanan untuk acara & katering.</p>
+
+          <h3 style="margin-top:12px">Sertifikasi</h3>
+          <ul>
+            <li>Sertifikat Hygiene & Sanitation (dikelola internal)</li>
+            <li>Sertifikat Pelatihan Karyawan: Safety & Food Handling</li>
+          </ul>
+        </div>
+
+        <div class="card-plain">
+          <h3>Tim Manajemen</h3>
+          <p><strong>Pemilik:</strong> Dwi Amara</p>
+          <p><strong>Manajer Operasional:</strong> Dwi Amara</p>
+          <p><strong>Chef / Head Cook:</strong> Dwi Amara</p>
+          <p class="muted">Tim kami terdiri dari chef berpengalaman, staf layanan, dan tim delivery yang profesional.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontak -->
+    <section id="kontak" style="margin-top:28px">
+      <h2>Kontak</h2>
+      <div class="two-col" style="margin-top:12px">
+        <div class="card-plain">
+          <h3>Informasi Kontak</h3>
+          <p><strong>Telepon / WhatsApp:</strong> <a href="tel:+62895402679650">+62 895-4026-79650</a></p>
+          <p><strong>Instagram:</strong> <a href="https://instagram.com/takoyakikroya" target="_blank" rel="noopener noreferrer">@takoyakikroya</a></p>
+          <p><strong>Alamat / Lokasi:</strong></p>
+          <!-- user-provided iframe -->
+          <div style="border-radius:12px;overflow:hidden;margin-top:8px">
+            <iframe src="https://www.google.com/maps/embed?pb=!4v1763516611412!6m8!1m7!1sMrvyaUuQ6stacZnbih4yCA!2m2!1d-6.25276820949596!2d106.5740954480966!3f0!4f0!5f0.7820865974627469"
+                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokasi Takoyaki Kroya"></iframe>
+          </div>
+        </div>
+
+        <div class="card-plain">
+          <h3>Jam Operasional</h3>
+          <p>Senin - Minggu: 10:00 - 21:00</p>
+          <h3 style="margin-top:12px">Pesan & Delivery</h3>
+          <p>Untuk pemesanan cepat, hubungi WhatsApp di nomor di atas atau DM instagram kami.</p>
+
+          <h3 style="margin-top:12px">Form Kontak</h3>
+          <form onsubmit="event.preventDefault(); alert('Terima kasih! Pesan Anda telah diterima. Kami akan menghubungi Anda.'); this.reset()">
+            <div style="display:flex;gap:8px;margin-bottom:8px;flex-direction:column">
+              <input type="text" placeholder="Nama" required style="padding:10px;border-radius:8px;border:1px solid #e6e6e6">
+              <input type="tel" placeholder="Nomor telepon / WA" required style="padding:10px;border-radius:8px;border:1px solid #e6e6e6">
+              <textarea placeholder="Pesan / Pertanyaan" rows="3" style="padding:10px;border-radius:8px;border:1px solid #e6e6e6"></textarea>
+            </div>
+            <button type="submit" class="btn btn-buy">Kirim Pesan</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      &copy; <span id="year"></span> Takoyaki Kroya — Semua hak cipta dilindungi.
+    </footer>
+  </main>
+
+  <!-- Modal Beli -->
+  <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="orderTitle">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <h3 id="orderTitle">Pesan</h3>
+        <button class="close" onclick="closeModal()">Tutup</button>
+      </div>
+
+      <form id="orderForm" onsubmit="handleOrder(event)">
+        <div style="margin-top:8px">
+          <label class="muted">Produk</label>
+          <input type="text" id="orderProduct" readonly style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee">
+        </div>
+
+        <div class="form-row" style="margin-top:8px">
+          <input type="number" id="orderQty" value="1" min="1" required>
+          <select id="orderSize" aria-label="Pilihan">
+            <option value="regular">Regular</option>
+            <option value="besar">Besar (+Rp 7.000)</option>
+          </select>
+        </div>
+
+        <div style="margin-top:8px">
+          <input type="text" id="custName" placeholder="Nama" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee">
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <input type="tel" id="custPhone" placeholder="Nomor telepon / WA" required style="flex:1;padding:10px;border-radius:8px;border:1px solid #eee">
+          <input type="text" id="custNote" placeholder="Catatan (optional)" style="flex:1;padding:10px;border-radius:8px;border:1px solid #eee">
+        </div>
+
+        <div style="margin-top:12px;display:flex;justify-content:flex-end;gap:8px">
+          <button type="button" class="close" onclick="closeModal()">Batal</button>
+          <button type="submit" class="btn btn-buy">Kirim Pesanan via WA</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    // Utilities
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // Modal + Order logic
+    function openOrderModal(productName, price){
+      const backdrop = document.getElementById('modalBackdrop');
+      backdrop.style.display = 'flex';
+      backdrop.setAttribute('aria-hidden','false');
+      document.getElementById('orderProduct').value = productName + " — Rp " + new Intl.NumberFormat('id-ID').format(price);
+      document.getElementById('orderQty').value = 1;
+      // store price for quick WA message
+      backdrop.dataset.price = price;
+    }
+    function closeModal(){
+      const backdrop = document.getElementById('modalBackdrop');
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden','true');
+    }
+
+    // When user submits order, we open WhatsApp with prefilled message (mobile-friendly)
+    function handleOrder(e){
+      e.preventDefault();
+      const productField = document.getElementById('orderProduct').value;
+      const qty = parseInt(document.getElementById('orderQty').value,10) || 1;
+      const size = document.getElementById('orderSize').value;
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const note = document.getElementById('custNote').value.trim();
+      const basePrice = Number(document.getElementById('modalBackdrop').dataset.price || 0);
+
+      // compute price adjustment
+      let price = basePrice;
+      if(size === 'besar') price += 7000;
+      const total = price * qty;
+
+      // Compose message
+      let msg = `Halo Takoyaki Kroya, saya ingin memesan:%0A`;
+      msg += `Produk: ${productField.replace(' — Rp','')}%0A`;
+      msg += `Qty: ${qty} (Ukuran: ${size})%0A`;
+      msg += `Nama: ${name}%0A`;
+      msg += `Nomor: ${phone}%0A`;
+      if(note) msg += `Catatan: ${note}%0A`;
+      msg += `Total perkiraan: Rp ${new Intl.NumberFormat('id-ID').format(total)}%0A`;
+      msg += `%0ATerima kasih.`;
+
+      // WhatsApp API link (phone is shop number)
+      const shopPhone = '62895402679650'; // tanpa +
+      const waUrl = `https://wa.me/${shopPhone}?text=${msg}`;
+
+      // open WA in new tab/window
+      window.open(waUrl, '_blank');
+
+      // Close modal
+      closeModal();
+    }
+
+    // Close modal when clicking backdrop (but not on modal itself)
+    document.getElementById('modalBackdrop').addEventListener('click', function(ev){
+      if(ev.target === this) closeModal();
+    });
+
+    // Smooth anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link=>{
+      link.addEventListener('click', function(e){
+        const target = this.getAttribute('href').slice(1);
+        if(!target) return;
+        e.preventDefault();
+        scrollToSection(target);
+      });
+    });
+
+    // Accessibility: keyboard escape to close modal
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
